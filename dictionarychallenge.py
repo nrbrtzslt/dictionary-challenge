@@ -12,10 +12,11 @@ exits = {0: {"Q": 0},
          4: {"N": 1, "W": 2, "Q": 0},
          5: {"W": 2, "S": 1, "Q": 0}}
 
-words_for_exits = {"balra": "W",
-                   "jobbra": "E",
-                   "előre": "N",
-                   "hátra": "S"}
+vocabulary = {"BALRA": "W",
+              "JOBBRA": "E",
+              "FEL": "N",
+              "LE": "S",
+              "KILÉPÉS": "Q"}
 
 loc = 1
 while True:
@@ -24,11 +25,17 @@ while True:
     print(locations[loc])
     print("The available exits are: {}".format(availableExits))
 
-    direction = input("Please enter a direction: ")
+    direction = input("Please enter a direction: ").upper()
+
+    if len(direction) > 1:
+        for word in vocabulary:
+            if word in direction:
+                direction = vocabulary[word]
+
     if direction == 'Q':
         break
 
-    if direction in words_for_exits:
-        loc = exits[loc][words_for_exits[direction]]
+    if direction in exits[loc]:
+        loc = exits[loc][direction]
     else:
-        print("Please select a valid direction!")
+        print("Please enter a valid value!")
